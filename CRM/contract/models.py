@@ -7,6 +7,6 @@ class Contract(models.Model):
     client = models.ForeignKey(to=Client, unique=True, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now_add=True)
-    status = models.BooleanField()
+    status = models.BooleanField(verbose_name="Contract's status")
     amount = models.FloatField()
     payment_due = models.DateTimeField(auto_now_add=True)
