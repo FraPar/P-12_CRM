@@ -60,3 +60,14 @@ class IsSales (permissions.BasePermission):
             return True
 
         return False
+
+
+class IsClientSales (permissions.BasePermission):
+
+    pass
+
+
+class IsSupportOnEvent (permissions.BasePermission):
+
+    pass
+

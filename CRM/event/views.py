@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework import viewsets
 
+from authentication.permissions import IsSupervisor, IsSales, IsSupport
 from .models import Event
 from .serializers import EventSerializer
  
@@ -15,7 +16,7 @@ class EventViewset(
         viewsets.GenericViewSet
     ):
 
-    permission_classes = [IsAuthenticated] 
+    permission_classes = [IsSupervisor|IsSupport|IsSales]
     serializer_class = EventSerializer
  
     def get_queryset(self):
