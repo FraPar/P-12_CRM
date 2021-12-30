@@ -33,7 +33,7 @@ class IsSupport(permissions.BasePermission):
             return True
         return False
 
-    def has_object_permission(self, request):
+    def has_object_permission(self, request, view, obj):
         if request.user.is_superuser:
             return True
 
@@ -52,7 +52,7 @@ class IsSales (permissions.BasePermission):
             return True
         return False
 
-    def has_object_permission(self, request):
+    def has_object_permission(self, request, view, obj):
         if request.user.is_superuser:
             return True
 

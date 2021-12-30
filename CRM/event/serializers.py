@@ -13,4 +13,5 @@ class EventSerializer(ModelSerializer):
                   'event_status',
                   'attendees',
                   'event_date',
-                  'notes']
+                  'notes',
+                  'id']

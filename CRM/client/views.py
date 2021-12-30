@@ -30,7 +30,8 @@ class ClientViewset(
 
         elif self.action in ['update','create', 'partial_update', 'destroy'] :
             print("Owner")
-            permission_classes = [IsClientSales]
+            permission_classes = [IsSupervisor|IsSales]
+
         else:
             print("Autenticated")
             permission_classes = [IsAuthenticated]

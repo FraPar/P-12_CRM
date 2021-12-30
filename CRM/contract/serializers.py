@@ -12,4 +12,5 @@ class ContractSerializer(ModelSerializer):
                   'date_updated',
                   'status',
                   'amount',
-                  'payment_due']
+                  'payment_due',
+                  'id']

@@ -14,4 +14,5 @@ class ClientSerializer(ModelSerializer):
                   'company_name',
                   'date_created',
                   'date_updated',
-                  'sales_contact']
+                  'sales_contact',
+                  'id']
