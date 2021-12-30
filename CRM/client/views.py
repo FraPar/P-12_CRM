@@ -22,6 +22,7 @@ class ClientViewset(
         """
         Instantiates and returns the list of permissions that this view requires.
         """
+        print("self.action")
         print(self.action)
         if self.action in ['list','retrieve']:
             print("Reader")

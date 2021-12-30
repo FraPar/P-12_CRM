@@ -11,4 +11,4 @@ class Client(models.Model):
     company_name = models.CharField(max_length=250)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now_add=True)
-    sales_contact = models.ForeignKey(to=User, unique=True, on_delete=models.CASCADE)
+    sales_contact = models.ForeignKey(to=User, on_delete=models.CASCADE)
