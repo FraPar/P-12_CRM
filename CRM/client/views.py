@@ -43,5 +43,10 @@ class ClientViewset(
     serializer_class = ClientSerializer
  
     def get_queryset(self):
-        return Client.objects.all()
-
+    # Nous récupérons tous les produits dans une variable nommée queryset
+        queryset = Client.objects.all()
+        # Vérifions la présence du paramètre ‘category_id’ dans l’url et si oui alors appliquons notre filtre
+        client_id = self.request.GET.get('id')
+        if client_id is not None:
+            queryset = queryset.filter(id=client_id)
+        return queryset
