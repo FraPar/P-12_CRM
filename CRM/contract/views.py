@@ -27,23 +27,17 @@ class ContractViewset(
         if self.action in ['list','retrieve']:
             print("Reader")
             permission_classes = [IsSupervisor|IsSupport|IsSales]
-
-        elif self.action in ['update','create', 'partial_update', 'destroy'] :
+        elif self.action in ['create'] :
+            print("Creater")
+            permission_classes = [IsSupervisor|IsSales]
+        elif self.action in ['update', 'partial_update', 'destroy']:
             print("Owner")
-            permission_classes = [IsSales]
+            permission_classes = [IsSupervisor|IsClientSales]
         else:
-            print("Autenticated")
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
-    
+
     serializer_class = ContractSerializer
  
     def get_queryset(self):
         return Contract.objects.all()
-
-    def destroy(self, request, *args, **kwargs):
-        contract_id = request.path.split('/')[-2]
-        contractset = Contract.objects.filter(id=contract_id)
-        if contractset.exists():
-                return super().destroy(request, *args, **kwargs)
-        return Response({"Status":"Pas de problème trouvé"},status=status.HTTP_400_BAD_REQUEST)

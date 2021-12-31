@@ -3,10 +3,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework import status
 
 from authentication.permissions import IsSupervisor, IsSales, IsSupport, IsClientSales, IsSupportOnEvent
 from .serializers import ClientSerializer
 from .models import Client
+from authentication.models import User
 from .serializers import ClientSerializer
  
 class ClientViewset(
@@ -27,13 +30,13 @@ class ClientViewset(
         if self.action in ['list','retrieve']:
             print("Reader")
             permission_classes = [IsSupervisor|IsSupport|IsSales]
-
-        elif self.action in ['update','create', 'partial_update', 'destroy'] :
-            print("Owner")
+        elif self.action in ['create'] :
+            print("Creater")
             permission_classes = [IsSupervisor|IsSales]
-
+        elif self.action in ['update', 'partial_update', 'destroy']:
+            print("Owner")
+            permission_classes = [IsSupervisor|IsClientSales]
         else:
-            print("Autenticated")
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
 
@@ -42,5 +45,3 @@ class ClientViewset(
     def get_queryset(self):
         return Client.objects.all()
 
-    def update(self, request, pk=None):
-        pass
