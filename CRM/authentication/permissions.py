@@ -65,9 +65,6 @@ class IsSales (permissions.BasePermission):
 
 class IsClientSales (permissions.BasePermission):
 
-    userset = User.objects.all()
-    clientset = Client.objects.all()
-
     def has_permission(self, request, view):
         if request.user.is_authenticated and request.user.role == sales:
             return True
@@ -101,5 +98,19 @@ class IsClientSales (permissions.BasePermission):
 
 class IsSupportOnEvent (permissions.BasePermission):
 
-    pass
+    def has_permission(self, request, view):
+        if request.user.is_authenticated and request.user.role == support:
+            return True
+        return False
 
+    def has_object_permission(self, request, view, post):
+        if request.user.is_superuser:
+            return True
+
+        if request.user.role == supervisor or request.user.role == support:
+            if request.user == post.support_contact:
+                print("This IS the owner")
+                return True
+            #if request.user.id == post.author:
+            print("This is NOT the owner")
+        return False

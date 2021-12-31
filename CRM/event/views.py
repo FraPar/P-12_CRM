@@ -32,7 +32,7 @@ class EventViewset(
             permission_classes = [IsSupervisor|IsSales]
         elif self.action in ['update', 'partial_update', 'destroy']:
             print("Owner")
-            permission_classes = [IsSupervisor|IsClientSales]
+            permission_classes = [IsSupervisor|IsClientSales|IsSupportOnEvent]
         else:
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
