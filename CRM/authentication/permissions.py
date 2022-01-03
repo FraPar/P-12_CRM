@@ -76,23 +76,14 @@ class IsClientSales (permissions.BasePermission):
 
         if request.user.role == supervisor or request.user.role == sales:
             try :
-                print("There IS SALES_CONTACT (CLIENT|CONTRACT)")
                 if request.user == post.sales_contact:
-                    print("This IS the owner")
                     return True
-                #if request.user.id == post.author:
-                print("This is NOT the owner")
-                print(request.user)
-                print(post.sales_contact)
                 return False
             except AttributeError:
-                print("There is NO SALES_CONTACT (EVENT)")
                 client_id = post.client.id
                 clientset = Client.objects.filter(id=client_id)
                 if request.user == clientset[0].sales_contact:
-                    print("This IS the owner")
                     return True
-                print("This is NOT the owner")
                 return False
         return False
 
@@ -109,8 +100,5 @@ class IsSupportOnEvent (permissions.BasePermission):
 
         if request.user.role == supervisor or request.user.role == support:
             if request.user == post.support_contact:
-                print("This IS the owner")
                 return True
-            #if request.user.id == post.author:
-            print("This is NOT the owner")
         return False
