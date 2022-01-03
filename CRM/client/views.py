@@ -5,6 +5,8 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 from authentication.permissions import IsSupervisor, IsSales, IsSupport, IsClientSales, IsSupportOnEvent
 from .serializers import ClientSerializer
@@ -41,12 +43,10 @@ class ClientViewset(
         return [permission() for permission in permission_classes]
 
     serializer_class = ClientSerializer
- 
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    filterset_fields = ['sales_contact']
+    search_fields  = ['id', 'first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name']
+
     def get_queryset(self):
-    # Nous récupérons tous les produits dans une variable nommée queryset
-        queryset = Client.objects.all()
-        # Vérifions la présence du paramètre ‘category_id’ dans l’url et si oui alors appliquons notre filtre
-        client_id = self.request.GET.get('id')
-        if client_id is not None:
-            queryset = queryset.filter(id=client_id)
-        return queryset
+
+        return Client.objects.all()

@@ -4,6 +4,8 @@ from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveMode
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 from authentication.permissions import IsSupervisor, IsSales, IsSupport, IsClientSales, IsSupportOnEvent
 from .models import Contract
@@ -38,6 +40,9 @@ class ContractViewset(
         return [permission() for permission in permission_classes]
 
     serializer_class = ContractSerializer
- 
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    filterset_fields = ['sales_contact', 'client']
+    search_fields  = ['id', 'status', 'amount', 'payment_due']
+
     def get_queryset(self):
         return Contract.objects.all()
