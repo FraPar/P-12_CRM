@@ -1,13 +1,17 @@
 # from django_better_admin_arrayfield.models.fields import ArrayField
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group, User
 
 from . import models
 
 
+admin.site.unregister(Group)
+
 @admin.register(models.User)
 class UsersAdmin(UserAdmin):
     list_display = (
+        "id",
         "username",
         "last_name",
         "first_name",
@@ -20,7 +24,7 @@ class UsersAdmin(UserAdmin):
         "last_name",
         "first_name",
     )
-    list_filter = ["is_active", "is_staff", "is_superuser"]
+    list_filter = ["is_superuser", "is_active"]
     search_fields = ("last_name", "first_name", "email")
 
     fieldsets = (
